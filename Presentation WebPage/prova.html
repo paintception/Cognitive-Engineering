@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Matthia Sabatelli" />
+  <title>Information Visualization</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+    <link type="text/css" rel="stylesheet" href="ex.css?3.2"/>
+    <script type="text/javascript" src="protovis.min.js"></script>
+    <script type="text/javascript" src="cars.js"></script>
+</head>
+<body>
+<div class="slide titlepage" style="background-image: url(bigdata.jpg)">
+  <h1 class="title"><b>Information Visualization</b></h1>
+  <p class="author">
+    <b>
+Matthia Sabatelli</b>
+  </p>
+  <p class="MSc"> <b> MSc Artificial Intelligence</b> </p>
+  <p class = "course"> <b>Cognitive Engineering Course</b></p>
+</div>
+
+<h1>About The Presentation</h1>
+<ul>
+<li>Information Visualization</li>
+<ul>
+  <li>Introduction</li>
+  <li>Visualization Pipeline</li>
+  <li>How to Structure Information</li>
+  <li>Overview Strategies</li>
+  <li>Navigation Strategies</li>
+  </ul>
+<li>Future Research and Developments</li>
+<li>Bad Examples of Representing Data</li> 
+<li>Networkism</li> 
+</ul>
+
+<h1>Information Visualization</h1>
+<ul>
+<li>Big Data</li>
+<li>The Cloud</li>
+<li>Collecting Data isn't a problem anymore</li>
+<li>How to represent it and make it <b>usable?!</b></li>
+<li>The <b>Goal</b> of Visual User Interfaces</li>
+<li>Providing <b>Insight</b> to the Users</li>
+</ul>
+
+<h1>Insight</h1>
+<ul>
+<li>Related to the Sense of Vision</li>
+<li><b>Link</b> between Digital Stored Data and the Human Mind</li>
+<li>Making Abstract Infromation Perceptible</li>
+<li>Mental Models that represent the Data</li>
+<li>This process might be complex</li>
+<li>Some <b>Design Guidelines</b> have been developed</li>
+</ul>
+
+<h1>Design Guidelines</h1>
+<ul>
+<li>Don't mislead the Users and don't hide any type of Information</li> 
+<li>Complexity: Data has never a unique structure, multiple types of variables</li>
+<li>Scalability: There's never enough space! There's need for <b>Interactive Techniques</b></li>
+<li>3 Main Steps to follow</li>
+</ul>
+
+
+<h1>The General Design Process</h1>
+<ul>
+<li>Requirements Analysis Phase, which has 2 primary inputs: study the <b>characteristics</b> of the information that has to be visualized and identify <b>type of Insight</b> that has to be transmitted</li>
+<li>Design of the Visualization System: decide the kind of <b>representation</b> to use</li>
+<li>Evaluation: Usability Testing and collecting <b>feedback</b> about the system</li> 
+</ul>
+
+
+
+<h1>The Visualization Pipeline</h1>
+<ul>
+<li>The Computational Process that converts Information into a visual form</li>
+<li>The User is able to interact with it and infer new knowledge</li>
+<li>It's made out of 4 different <b>steps</b>
+  <ul>
+    <li> Transformation of the Data into a well organized data-format</li>
+    <li> Map the Data into a visual form through the use of a particular <code>f(x)</code> </li>
+    <li>Create Views based on the visual form according to the priorities of the Users</li>
+    <li>Make the whole process dynamic and allow the Users to interact with it</li>
+  </ul>
+  </li>  
+</ul>
+
+
+<h1>The Visualization Pipeline</h1>
+<ul>
+SET THE IMAGE OF THE ARTICLE  
+</ul>
+
+
+<h1>Information Structure</h1>
+<ul>
+  <li>Understanding the Visualization Pipeline is a good start but not enough</li>
+  <li>Doesn't explain how to deal with more <b>complex</b> data</li>
+  <li>In order to build better systems: 
+    <ul>
+      <li>Different Types of Data</li>
+      <li>Different Ways of Representing it</li>
+    </ul>
+  </li>
+</ul>
+
+<h1>Tabular Structures</h1>
+<ul>
+<li>The most Famous way of Representing Data</li>
+<li>Basic Matrix with rows representing entities and columns attributes</li>
+<li>Examples:
+<ul>
+  <li>Microsoft Excel</li>
+  <li>Matlab and R</li>
+</ul>
+</li>
+<li>Problem of Scalability: Complexity increases with the number of Attributes</li>
+<li>How to represent High Dimensional Data?</li>
+</ul>
+
+<h1>Solution: TableLens</h1>
+<ul>
+<li>Sorting Data just by 1 Attribute + Simultaneous sort of all the next attributes</li>
+</ul>
+<div id="center"><div id="fig">
+    <script type="text/javascript+protovis">
+
+// The units and dimensions to visualize, in order.
+var units = {
+  cyl: {name: "cylinders", unit: ""},
+  dsp: {name: "displacement", unit: " sq in"},
+  lbs: {name: "weight", unit: " lbs"},
+  hp: {name: "horsepower", unit: " hp"},
+  acc: {name: "acceleration (0-60 mph)", unit: " sec"},
+  mpg: {name: "mileage", unit: " mpg"},
+  year: {name: "year", unit: ""}
+}
+
+var dims = pv.keys(units);
+
+/* Sizing and scales. */
+var w = 820,
+    h = 420,
+    fudge = 0.5,
+    x = pv.Scale.ordinal(dims).splitFlush(0, w),
+    y = pv.dict(dims, function(t) pv.Scale.linear(
+        cars.filter(function(d) !isNaN(d[t])),
+        function(d) Math.floor(d[t])-fudge,
+        function(d) Math.ceil(d[t]) +fudge
+        ).range(0, h)),
+    c = pv.dict(dims, function(t) pv.Scale.linear(
+        cars.filter(function(d) !isNaN(d[t])),
+        function(d) Math.floor(d[t])-fudge,
+        function(d) Math.ceil(d[t]) +fudge
+        ).range("steelblue", "brown"));
+
+/* Interaction state. */
+var filter = pv.dict(dims, function(t) {
+    return {min: y[t].domain()[0], max: y[t].domain()[1]};
+  }), active = "mpg";
+
+/* The root panel. */
+var vis = new pv.Panel()
+    .width(w)
+    .height(h)
+    .left(30)
+    .right(30)
+    .top(30)
+    .bottom(20);
+
+// The parallel coordinates display.
+vis.add(pv.Panel)
+    .data(cars)
+    .visible(function(d) dims.every(function(t)
+        (d[t] >= filter[t].min) && (d[t] <= filter[t].max)))
+  .add(pv.Line)
+    .data(dims)
+    .left(function(t, d) x(t))
+    .bottom(function(t, d) y[t](d[t]))
+    .strokeStyle("#ddd")
+    .lineWidth(1)
+    .antialias(false);
+
+// Rule per dimension.
+rule = vis.add(pv.Rule)
+    .data(dims)
+    .left(x);
+
+// Dimension label
+rule.anchor("top").add(pv.Label)
+    .top(-12)
+    .font("bold 10px sans-serif")
+    .text(function(d) units[d].name);
+
+// The parallel coordinates display.
+var change = vis.add(pv.Panel);
+
+var line = change.add(pv.Panel)
+    .data(cars)
+    .visible(function(d) dims.every(function(t)
+        (d[t] >= filter[t].min) && (d[t] <= filter[t].max)))
+  .add(pv.Line)
+    .data(dims)
+    .left(function(t, d) x(t))
+    .bottom(function(t, d) y[t](d[t]))
+    .strokeStyle(function(t, d) c[active](d[active]))
+    .lineWidth(1);
+
+// Updater for slider and resizer.
+function update(d) {
+  var t = d.dim;
+  filter[t].min = Math.max(y[t].domain()[0], y[t].invert(h - d.y - d.dy));
+  filter[t].max = Math.min(y[t].domain()[1], y[t].invert(h - d.y));
+  active = t;
+  change.render();
+  return false;
+}
+
+// Updater for slider and resizer.
+function selectAll(d) {
+  if (d.dy < 3) {
+    var t = d.dim;
+    filter[t].min = Math.max(y[t].domain()[0], y[t].invert(0));
+    filter[t].max = Math.min(y[t].domain()[1], y[t].invert(h));
+    d.y = 0; d.dy = h;
+    active = t;
+    change.render();
+  }
+  return false;
+}
+
+/* Handle select and drag */
+var handle = change.add(pv.Panel)
+    .data(dims.map(function(dim) { return {y:0, dy:h, dim:dim}; }))
+    .left(function(t) x(t.dim) - 30)
+    .width(60)
+    .fillStyle("rgba(0,0,0,.001)")
+    .cursor("crosshair")
+    .event("mousedown", pv.Behavior.select())
+    .event("select", update)
+    .event("selectend", selectAll)
+  .add(pv.Bar)
+    .left(25)
+    .top(function(d) d.y)
+    .width(10)
+    .height(function(d) d.dy)
+    .fillStyle(function(t) t.dim == active
+        ? c[t.dim]((filter[t.dim].max + filter[t.dim].min) / 2)
+        : "hsla(0,0,50%,.5)")
+    .strokeStyle("white")
+    .cursor("move")
+    .event("mousedown", pv.Behavior.drag())
+    .event("dragstart", update)
+    .event("drag", update);
+
+handle.anchor("bottom").add(pv.Label)
+    .textBaseline("top")
+    .text(function(d) filter[d.dim].min.toFixed(0) + units[d.dim].unit);
+
+handle.anchor("top").add(pv.Label)
+    .textBaseline("bottom")
+    .text(function(d) filter[d.dim].max.toFixed(0) + units[d.dim].unit);
+
+vis.render();
+
+    </script>
+  </div></div>
+
+
+
+</body>
+</html>
+
