@@ -16,10 +16,16 @@
     <link type="text/css" rel="stylesheet" href="ex.css?3.2"/>
     <script type="text/javascript" src="protovis.min.js"></script>
     <script type="text/javascript" src="cars.js"></script>
+    <link rel="stylesheet" href="Treant.css">
+    <link rel="stylesheet" href="example7.css">
+    <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/libs/modernizr-2.0.6.min.js"></script>
 </head>
 <body>
 <div class="slide titlepage" style="background-image: url(bigdata.jpg)">
-  <h1 class="title"><b>Information Visualization</b></h1>
+  <h1 class="title" style="font-size: 55px" ><b>Information Visualization</b></h1>
   <p class="author">
     <b>
 Matthia Sabatelli</b>
@@ -30,17 +36,27 @@ Matthia Sabatelli</b>
 
 <h1>About The Presentation</h1>
 <ul>
-<li>Information Visualization</li>
-<ul>
-  <li>Introduction</li>
-  <li>Visualization Pipeline</li>
-  <li>How to Structure Information</li>
-  <li>Overview Strategies</li>
-  <li>Navigation Strategies</li>
+<li>Information Visualization
+  <ul>
+    <li>Introduction</li>
+    <li>Visualization Pipeline</li>
+    <li>How to Structure Information</li>
+    <li>Overview Strategies</li>
+    <li>Navigation Strategies</li>
+  </li>
   </ul>
-<li>Future Research and Developments</li>
-<li>Bad Examples of Representing Data</li> 
-<li>Networkism</li> 
+<li>Toward a Deeper Understanding of the Role of Interaction in Information Visualization
+<ul>
+  <li>7 Categories of Interaction Techniques</li>
+</ul>
+
+</li>
+<li>Funny Part!!!
+<ul> 
+  <li>Bad Examples of Data Representation</li>
+  <li>Networkism</li>
+</li>
+</ul> 
 </ul>
 
 <h1>Information Visualization</h1>
@@ -128,7 +144,7 @@ SET THE IMAGE OF THE ARTICLE
 <li>How to represent High Dimensional Data?</li>
 </ul>
 
-<h1>Solution: TableLens</h1>
+<h1>TableLens</h1>
 <ul>
 <li>Sorting Data just by 1 Attribute + Simultaneous sort of all the next attributes</li>
 </ul>
@@ -278,6 +294,165 @@ vis.render();
 
 
 
+<h1>Spatial and Temporal Structures</h1>
+<ul>
+<li>Characterized by the Multiple Components</li>
+<li>Integration of Spatial Environment + Passing of Time</li>
+<li>Active Navigation</li>
+<li>Manipulation by the User of the Visualization System</li>
+Example http://www.zingchart.com/gallery/chart/#!timeline-style-map
+</ul>
+
+
+<h1>Trees and Networks</h1>
+<ul>
+<li>Based on Connections</li>
+<li>Related to computational Graph Theory: vertices = entities that are related via connections = relations</li>
+<li>Overall Idea is to present a <b>Hierchical Structure</b> given by parent-child connections</li>
+</ul>
+
+<h1>Trees</h1>
+<ul>
+<li>May be very space consuming</li>
+<li>Impossible to represent all connections between nodes</li>
+<li>Represent only the main nodes and implement deep navigation</li>
+<li>Create MultiDimensional Trees, however might look confusing</li>
+</ul>
+<div class="chart" id="OrganiseChart6"></div>
+<script src="raphael.js"></script>
+<script src="Treant.js"></script>   
+<script src="example7.js"></script>
+<script>
+  new Treant( tree_structure );
+</script>
+
+
+<h1>Networks</h1>
+  
+<ul>
+<li>The Node-Link Approach is Dominant</li>
+<li>Able to Highlight Hidden Patterns</li>
+<li>Computationally very Expensive</li>
+</ul> 
+
+<h1>Similar Song Networks</h1>
+<div id="container" class="container">
+    <header>
+    <p>Songs similar to one another according to <a href="http://www.last.fm/api">last.fm</a> are linked together. Song nodes are sized based on playcounts, and colored by artist.</p>
+    </header>
+
+      <div id="song_selection" class="control">
+        <h3>Song</h3>
+        <select id="song_select">
+          <option value="call_me_al.json">You Can Call Me Al</option>
+          <option value="sledgehammer_2_rounds.json">Sledgehammer</option>
+          <option value="poker_face.json">Poker Face</option>
+          <option value="jolene.json">Jolene</option>
+          <option value="helplessness_blues.json">Helplessness Blues</option>
+          <option value="she_said.json">She Said She Said</option>
+          <option value="short_skirt.json">Short Skirt, Long Jacket</option>
+        </select>
+
+      </div>
+    <div id="controls">
+      <div id="layouts" class="control">
+        <h3>Layout</h3>
+        <a id="force" class="active">Force Directed</a>
+        <a id="radial">Artists</a>
+      </div>
+      <div id="filters" class="control">
+        <h3>Filter</h3>
+        <a id="all" class="active">All</a>
+        <a id="popular">Popular</a>
+        <a id="obscure">Obscure</a>
+      </div>
+      <div id="sorts" class="control">
+        <h3>Sort</h3>
+        <a id="songs" class="active">Songs</a>
+        <a id="links">Links</a>
+      </div>
+      <div id="search_section" class="control">
+        <form id="search_form" action=""  method="post">
+          <p class="search_title">Search <input type="text" class="text-input" id="search" value="" /></p>
+        </form>
+      </div>
+    <div id="main" role="main">
+      <div id="vis"></div>
+    </div>
+  </div>
+</div>
+<script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.2.min.js"><\/script>')</script>
+
+
+  <script defer src="js/plugins.js"></script>
+  <script defer src="js/script.js"></script>
+  <script src="js/libs/coffee-script.js"></script>
+  <script src="js/libs/d3.v2.js"></script>
+  <script src="js/Tooltip.js"></script>
+  <script type="text/coffeescript" src="coffee/vis.coffee"></script>
+
+
+<h1>Overview Strategies</h1>
+<ul>
+<li>Biggest Issue is related to <b>Space</b></li>
+<li>Schneiderman's Mantra: <i>Overview first, zoom and filter, details only on demand!</i>
+  <ul>
+  <li>Provide the User with a general Overview of the Information Space</li>
+  <li>Implement Exploration Tools</li>
+  <li>Manipulate the Data in order to gain more detailed Information</li>
+  </ul>
+  </li>
+<li>Pack as much information as possible in the most clearest way</li>
+</ul>
+
+<h1>Ennesimo Esempio Fancy</h1>
+
+
+<h1>How to create better Overviews?</h1>
+<ul>
+<li>Reducing Data Quantity
+  <ul>
+    <li>Grouping similar entities and restructure the dataset</li>
+    <li>New aggregates with less total entities</li>
+    <li>Clustering Techniques: Knn, DBSCAN</li>
+    <li>Principle Component Analysis: reducing the dimensionality of the attributes and limiting the information loss</li>
+  </ul>
+  </li>
+    <li>Miniaturizing Visual Gliphs
+    <ul>
+      <li>Keep the original Data</li>
+      <li>Reduce the gliphs that represent the mappping</li>
+    </ul>
+    </li>
+  </ul>
+
+<h1>Navigation Strategies</h1>
+<ul>
+<li>Induce the User to explore the Data: good Navigation Strategies</li>
+  <ul>
+    <li>Zoom + Pan: Opportunity to zoom dynamically into the information space and zoom back in order to return to the general Overview</li>
+    <li>Overview + Detail: Multiple views are used to display the general overview together with detail view at the same time. Connection between the general Overview and the relative detailed Information Space</li>
+    <li>Focus + Context: Expands the region of Focus showing its details by pushing the surrounding room in the back</li>
+  </ul>
+</ul>
+    
+<h1>Nice Example of Navigation</h1>
+
+<h1>Toward a Deeper Understanding of the Role of Interaction in Information Visualization</h1>
+<ul>
+<li><b>Active Interaction</b> is as impportant as the visualization part!</li>
+<li>It doesn't play a secondary role in Information Visualization</li>
+<li>Representation and Interaction aren't mutually exclusive</li>
+
+
+
+</ul>
+
+
+
+
+
+
+
 </body>
 </html>
-
